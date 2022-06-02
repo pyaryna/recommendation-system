@@ -4,11 +4,12 @@ from calculation_utils import *
 def calculate_similarity():
     new_rates = get_rates_for_previous_day()
 
+    if (len(new_rates) == 0):
+        return
+
     requests = {}    
     yesterday_datetime = datetime.datetime.utcnow() - datetime.timedelta(days = 1)
     yesterday = datetime.datetime(yesterday_datetime.year, yesterday_datetime.month, yesterday_datetime.day)
-
-    print(new_rates)
 
     for rate in new_rates: 
         for review in rate['reviews']:
