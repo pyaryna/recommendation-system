@@ -54,3 +54,20 @@ def calculate_recomendations_by_book(book_id):
     similarities.sort()
     similarities.reverse()
     return similarities
+
+def calculate_recomendations_for_user(user_id):
+    user_reviews = get_rates_by_users([user_id])
+    changed_user_reviews = {}
+
+    book_similatity = {}
+    similarities = []
+    for review in user_reviews:
+        changed_user_reviews.update(change_scheme_book_rate(review))
+        similarity_dict = get_similarity_by_book(review['bookId'])
+        for item in similarity_dict:
+            similarities.append((item['similarity'], item['book1'] if item['book1'] != review['bookId'] else item['book2']))
+            
+        book_similatity.update({review['bookId'] : similarities})
+
+    recommended_items = get_recommended_items(changed_user_reviews, book_similatity)
+    return recommended_items

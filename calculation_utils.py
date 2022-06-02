@@ -39,3 +39,31 @@ def change_scheme_user_rate(rate):
         new_reviews[review['userId']] = review['rate']
 
     return new_reviews
+
+def change_scheme_book_rate(rate):
+    new_reviews = {}
+    for review in rate['reviews']:
+        new_reviews[rate['bookId']] = review['rate']
+
+    return new_reviews
+
+def get_recommended_items(rates, book_similatity):
+    scores = {}
+    totalSim = {}
+
+    for (item, rating) in rates.items():
+        for (similarity, item2) in book_similatity[item]:
+            if item2 in rates: 
+                continue
+
+            scores.setdefault(item2, 0)
+            scores[item2] += similarity * rating
+
+            totalSim.setdefault(item2, 0)
+            totalSim[item2] += similarity
+
+    rankings=[(round(score/totalSim[item], 3),item) for item,score in scores.items( )]
+    
+    rankings.sort( )
+    rankings.reverse( )
+    return rankings

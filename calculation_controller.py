@@ -36,8 +36,20 @@ class BookSimilarity(Resource):
 class RecommendationByBook(Resource):
     def get(self, id):
         recommedations = []
-        bookd_id = ObjectId(id) # 620ea6721feee707fc54939a
+        bookd_id = ObjectId(id) # 620ea6721feee707fc54939a - id for testing
         for item in calculate_recomendations_by_book(bookd_id):
+            recommedations.append({
+                'rate': item[0],
+                'bookId': str(item[1])
+            })
+        return jsonify(recommedations)
+
+@api.route('/user/<string:id>')
+class RecommendationForUser(Resource):
+    def get(self, id):
+        recommedations = []
+        user_id = ObjectId(id) # 620bb9fef23b1bc78052c605 - id for testing
+        for item in calculate_recomendations_for_user(user_id):
             recommedations.append({
                 'rate': item[0],
                 'bookId': str(item[1])
