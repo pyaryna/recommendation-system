@@ -22,5 +22,15 @@ class Home(Resource):
         return '''<h1>Recommendation system of books</h1>
             <p>Item-based Collaborative filtration</p>'''
 
+@api.route('/similarity')
+class BookSimilarity(Resource):
+    def get(self):
+        amount = calculate_similarity()
+        return jsonify({
+                'status': '200 OK',
+                'message':'Data is posted to MongoDB!',
+                'amount': amount
+            })
+
 if __name__ == '__main__':
     app.run(debug = True)
