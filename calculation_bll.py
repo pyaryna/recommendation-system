@@ -44,3 +44,13 @@ def calculate_similarity():
     insert_books_similarity(new_similaritites)
     return len(new_similaritites)
        
+def calculate_recomendations_by_book(book_id):    
+    book_similarities = get_similarity_by_book(book_id)
+
+    similarities = []
+    for item in book_similarities:
+            similarities.append((item['similarity'], item['book1'] if item['book1'] != book_id else item['book2']))
+            
+    similarities.sort()
+    similarities.reverse()
+    return similarities

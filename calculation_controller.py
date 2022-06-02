@@ -32,5 +32,17 @@ class BookSimilarity(Resource):
                 'amount': amount
             })
 
+@api.route('/book/<string:id>')
+class RecommendationByBook(Resource):
+    def get(self, id):
+        recommedations = []
+        bookd_id = ObjectId(id) # 620ea6721feee707fc54939a
+        for item in calculate_recomendations_by_book(bookd_id):
+            recommedations.append({
+                'rate': item[0],
+                'bookId': str(item[1])
+            })
+        return jsonify(recommedations)
+
 if __name__ == '__main__':
     app.run(debug = True)
