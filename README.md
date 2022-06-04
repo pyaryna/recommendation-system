@@ -28,3 +28,5 @@ To run this project, run the calculation_controller file
 * calculation_bll: Business layer (all main calculations)
 * calculation_utils: File with additional functions
 * calculation_dal: Data access functionality
+* google_books_1299: CSV file with books to seed the database
+* users: JSON file with users to seed the database
